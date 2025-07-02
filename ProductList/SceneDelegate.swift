@@ -15,19 +15,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         // 1. Приводим параметр scene к UIWindowScene
-                guard let windowScene = scene as? UIWindowScene else { return }
+        guard scene is UIWindowScene else { return }
         
         // Создаем window и устанавливаем windowScene
-               window = UIWindow(windowScene: windowScene)
-               
-               // Создаем ViewModel и ViewController
-               let viewModel = ProductListViewModel()
-               let viewController = ProductListViewController(viewModel: viewModel)
-               let navigationController = UINavigationController(rootViewController: viewController)
-               
-               // Устанавливаем rootViewController и делаем window ключевым и видимым
-               window?.rootViewController = navigationController
-               window?.makeKeyAndVisible()
+        
+        
+        guard let windowScene = scene as? UIWindowScene else { return }
+        
+        window = UIWindow(windowScene: windowScene)
+        
+        // Настройка зависимостей
+        let productService = ProductService()
+        let viewModel = ProductListViewModel(productService: productService)
+        let navigationController = UINavigationController()
+        let coordinator = ProductListCoordinator(navigationController: navigationController)
+        let viewController = ProductListViewController(viewModel: viewModel, coordinator: coordinator)
+        
+        navigationController.viewControllers = [viewController]
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+    }
+    
+    //               window = UIWindow(windowScene: windowScene)
+//
+//               // Создаем ViewModel и ViewController
+//               let viewModel = ProductListViewModel()
+//               let viewController = ProductListViewController(viewModel: viewModel)
+//               let navigationController = UINavigationController(rootViewController: viewController)
+//
+//               // Устанавливаем rootViewController и делаем window ключевым и видимым
+//               window?.rootViewController = navigationController
+//               window?.makeKeyAndVisible()
         
     }
 
@@ -59,6 +77,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
-}
 

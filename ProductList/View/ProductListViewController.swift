@@ -7,12 +7,15 @@
 
 import UIKit
 
+// ProductListViewController.swift
 final class ProductListViewController: UIViewController {
-    private let viewModel: ProductListViewModel
+    private var viewModel: ProductListViewModelProtocol
+    private let coordinator: ProductListCoordinatorProtocol
     private let tableView = UITableView()
     
-    init(viewModel: ProductListViewModel) {
+    init(viewModel: ProductListViewModelProtocol, coordinator: ProductListCoordinatorProtocol) {
         self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,7 +27,7 @@ final class ProductListViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         bindViewModel()
-        loadData()
+        viewModel.viewDidLoad()
     }
     
     private func setupViews() {
@@ -62,63 +65,15 @@ final class ProductListViewController: UIViewController {
             }
         }
     }
-    
-    private func loadData() {
-        let json = """
-        [
-            {
-                "id": "tovar1",
-                "name": "Товар 1",
-                "description": "Это какой-то очень чудесный товар для того, чтобы вы его купили",
-                "price": 100
-            },
-            {
-                "id": "car",
-                "name": "Машинка с названием, которое скорее всего не влезет в одну строку на очень маленьком экране iPhone",
-                "description": "Зато описание у этой машинки очень даже короткое",
-                "price": 10000.23
-            },
-            {
-                "id": "flower",
-                "name": "Букет цветов",
-                "description": "В нем и гвоздики, и герани, и даже чуть цветов акации. Пахнет просто замечательно! И долго радует глаз...",
-                "price": 77.24
-            },
-            {
-                "id": "eda",
-                "name": "Набор на ужин",
-                "description": "Колбаса и немного хлеба. Возможно, если очень повезет, будет еще и масло. Обязательно будет и черный чай с сахаром из стакана в подстаканнике (но его вы купите сами).",
-                "price": 77.24
-            }
-        ]
-        """
-        
-        if let jsonData = json.data(using: .utf8) {
-            viewModel.configure(with: jsonData)
-        }
-    }
-
-    private func showProductDetail(_ product: Product) {
-        DispatchQueue.main.async {
-            let popup = ProductDetailPopupView()
-            popup.configure(with: product)
-            
-            if let window = UIApplication.shared.currentKeyWindow {
-                popup.show(in: window)
-            } else {
-                popup.show(in: self.view)
-            }
-        }
-    }
 }
 
 extension ProductListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.products.count + 1 // +1 for sort button
+        viewModel.productsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        if viewModel.isSortButton(indexPath: indexPath) {
             let cell = tableView.dequeueReusableCell(withIdentifier: SortButtonCell.reuseIdentifier, for: indexPath) as! SortButtonCell
             cell.configure(title: "Сортировать по алфавиту")
             cell.onButtonTapped = { [weak self] in
@@ -127,7 +82,7 @@ extension ProductListViewController: UITableViewDataSource, UITableViewDelegate 
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
-            if let product = viewModel.product(at: indexPath.row - 1) {
+            if let product = viewModel.product(at: indexPath.row) {
                 cell.configure(with: product)
             }
             return cell
@@ -137,12 +92,9 @@ extension ProductListViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.row == 0 {
-            return
-        }
+        guard !viewModel.isSortButton(indexPath: indexPath),
+              let product = viewModel.product(at: indexPath.row) else { return }
         
-        if let product = viewModel.product(at: indexPath.row - 1) {
-            showProductDetail(product)
-        }
+        coordinator.showProductDetail(product)
     }
 }

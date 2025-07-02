@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A05C4DF22E13F6E300EB0ECA /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05C4DF12E13F6E300EB0ECA /* ProductService.swift */; };
+		A05C4DF42E13F8FC00EB0ECA /* ProductListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05C4DF32E13F8FC00EB0ECA /* ProductListCoordinator.swift */; };
 		A0AF8BE02E13A63900BA8355 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF8BDF2E13A63900BA8355 /* AppDelegate.swift */; };
 		A0AF8BE22E13A63900BA8355 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF8BE12E13A63900BA8355 /* SceneDelegate.swift */; };
 		A0AF8BE42E13A63900BA8355 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AF8BE32E13A63900BA8355 /* ProductListViewController.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A05C4DF12E13F6E300EB0ECA /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		A05C4DF32E13F8FC00EB0ECA /* ProductListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListCoordinator.swift; sourceTree = "<group>"; };
 		A0AF8BDC2E13A63900BA8355 /* ProductList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProductList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0AF8BDF2E13A63900BA8355 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0AF8BE12E13A63900BA8355 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A05C4DF02E13F6C500EB0ECA /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				A05C4DF12E13F6E300EB0ECA /* ProductService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		A0AF8BD32E13A63900BA8355 = {
 			isa = PBXGroup;
 			children = (
@@ -64,9 +76,11 @@
 			children = (
 				A0AF8BDF2E13A63900BA8355 /* AppDelegate.swift */,
 				A0AF8BE12E13A63900BA8355 /* SceneDelegate.swift */,
-				A0AF8BF32E13AA1B00BA8355 /* View */,
+				A05C4DF32E13F8FC00EB0ECA /* ProductListCoordinator.swift */,
 				A0AF8BF42E13AA2800BA8355 /* Model */,
+				A0AF8BF32E13AA1B00BA8355 /* View */,
 				A0AF8BF72E13AA8C00BA8355 /* ViewModel */,
+				A05C4DF02E13F6C500EB0ECA /* Service */,
 				A0AF8BE82E13A63C00BA8355 /* Assets.xcassets */,
 				A0AF8BEA2E13A63C00BA8355 /* LaunchScreen.storyboard */,
 				A0AF8BED2E13A63C00BA8355 /* Info.plist */,
@@ -171,8 +185,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0AF8BE42E13A63900BA8355 /* ProductListViewController.swift in Sources */,
+				A05C4DF22E13F6E300EB0ECA /* ProductService.swift in Sources */,
 				A0AF8BFD2E13AB6700BA8355 /* ProductDetailPopupView.swift in Sources */,
 				A0AF8BF92E13AAB200BA8355 /* ProductListViewModel.swift in Sources */,
+				A05C4DF42E13F8FC00EB0ECA /* ProductListCoordinator.swift in Sources */,
 				A0AF8BF62E13AA5200BA8355 /* Product.swift in Sources */,
 				A0AF8BFB2E13AB2000BA8355 /* ProductCell.swift in Sources */,
 				A0AF8BE02E13A63900BA8355 /* AppDelegate.swift in Sources */,

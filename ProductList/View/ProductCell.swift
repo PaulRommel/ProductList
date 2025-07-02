@@ -7,6 +7,7 @@
 
 import UIKit
 
+// ProductCell.swift
 final class ProductCell: UITableViewCell {
     static let reuseIdentifier = "ProductCell"
     
@@ -66,6 +67,7 @@ final class ProductCell: UITableViewCell {
     }
 }
 
+// SortButtonCell.swift
 final class SortButtonCell: UITableViewCell {
     static let reuseIdentifier = "SortButtonCell"
     
